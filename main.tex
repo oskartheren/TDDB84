@@ -84,16 +84,18 @@ Email: oskth878@student.liu.se}}
 \maketitle
 
 \begin{abstract}
-	 In this report an implementation of the Prototype design pattern, as described by the GoF, is presented in the high-level and untyped programming language JavaScript. It is implemented into the context of an existing game, where it replaces a switch case to remove cyclomatic complexity. The cyclomatic complexity difference is compared to the difference in lines of code to evaluate how maintainability is affected.
+	 In this report an implementation of the Prototype design pattern, as described by the GoF, is presented in the high-level and untyped programming language JavaScript. It is implemented into the context of an existing game, where it replaces a switch case to remove cyclomatic complexity. The cyclomatic complexity difference is compared to the difference in lines of code to evaluate how maintainability is affected. The report is concluded with some discussion on the usefulness of implementing the pattern in a bigger project.  
 \end{abstract}
 
 \section{Introduction}
 \label{sec:Introduction}
-It is widely acknowledged among object-oriented programmers that design patterns are useful to solve commonly occurring problems within a given context when coding. Design patterns was mainly introduced to software developers through the GoF (Gang of Four) that came out with the idea in their book from 1995~\cite{bibitem:GoF} the idea originaly came from an architectural concept. The patterns has since been widely discussed and used.
+It is widely acknowledged among object-oriented programmers that design patterns can be useful to solve commonly occurring problems within a given context  by creating reusable code. Design patterns was mainly introduced to software developers through the GoF (Gang of Four) that came out with the idea in their book from 1995~\cite{bibitem:GoF} though the idea originally comes from an architectural concept. The patterns has since been widely discussed, customized and used.
 
 Even though they are so popular there are few empirically justified reasons to use them according to C. Zhang and D. Budgen in their article ``What Do We Know about the Effectiveness of Software Design Patterns?''~\cite{bibitem:Zhang}.
 
-The purpose of this report is to find out if the implementation of a specific design pattern, Strategy [section~\ref{sec:Strategy}], will affect maintainability [section~\ref{sec:Maintainability}] in a positive way.
+The design patterns are created from an object oriented perspective, while on the other hand web development is most commonly conducted in the dynamic, untyped and interpreted language JavaScript. It is often criticized by developers used to strongly typed languages that its static type-checking can lead to unsafe code, so if the GoFs design patterns where applicable to JavaScript proposed by Harmes et al.~\cite{bibitem:DiazHarmes}, it might be used in a safer and more reusable way.
+
+The purpose of this report is to find out if the implementation of a specific design pattern, Strategy [section~\ref{sec:Strategy}], will affect maintainability [section~\ref{sec:Maintainability}] in a positive way in the programming language JavaScript.
 
 \subsection{Research Question}
 \begin{itemize}
@@ -162,16 +164,16 @@ entity.messageType = "HumanMessage";
 The Strategy pattern will be implemented in a separate file called \texttt{Messager.js}. It contains a prototype \texttt{Messager(strategy)} that takes a strategy and saves it to its own context \texttt{this}. It also contains a method \texttt{getMessage(...)} that calls the method \texttt{getMessage(...)} on the strategy bound to the context of \texttt{Messager}. The different strategies are in this case also placed in the file \texttt{Messager.js}, so when a new one is needed is just needs to be added to this file. For the resulting file see [Listing \ref{lst:result}].
 
 \subsection{Metrics}
-The chosen metrics for this report are cyclomatic complexity and lines of code, they are quite easy to measure and is applicable to many languages.
+The chosen metrics for this report are cyclomatic complexity and lines of code, they are quite easy to measure and is applicable to many languages. Many maintainability metrics use a combination of these metrics in addition of some more.
 
 \subsubsection{Cyclomatic complexity}
-id anad switch....
+It was first developed by Thomas J. McCabe in his ``A Complexity Measure''~\cite{bibitem:CC}. For this smaller example it can be summarized to how many paths a program has where each switch case and if statement creates a new path.
 
 \subsubsection{Lines of code}
-The higher amount of lines of code the worse maintainability, excluding whitespace and comments....
+This metric can be used to predict maintainability of code, in general the amount of lines of code correlate with how maintainable the source code is. In this report physical lines of code is used, that counts every line that is not whitespace or comment.
 
 \section{Result}
-The result of the two metrics are presented below
+The result of the two metrics are presented in the subsections below.
 
 \subsection{Cyclomatic complexity}
 The cyclomatic complexity of the original code is three, one for each case in the switch case.
@@ -181,20 +183,30 @@ After the implementation of the Strategy pattern the complexity is reduced down 
 \subsection{Lines of code}
 The number of lines of code in the original code is 18.
 
-After the implementation of the Strategy pattern the total number of lines of code is increased to 29 (excluding whitespace), though \texttt{MainUI.js} is reduced down to 5 lines.
+After the implementation of the Strategy pattern the total number of lines of code is increased to 29, though \texttt{MainUI.js} is reduced down to 5 lines.
 
 \section{Discussion}
 The result and method is discussed in the following subsections.
 
-\subsection{Method}
-Something something
-
 \subsection{Result}
-The cyclomatic complexity was completely removed from the function \texttt{showMessage} which was the expected result comparing with code examples found at two websites, though they were in the object oriented languages.
+The cyclomatic complexity was completely removed from the method \texttt{showMessage} which was the expected result comparing with code examples found at two websites, though they were in the object oriented languages.
 
 One example is by Gil Fink, that has among other co-authored several Microsoft Official Courses. He writes in a blog post about ``Applying Strategy Pattern Instead of Using Switch Statements'' where he applies the Strategy pattern to C++.~\cite{bibitem:GilFink}
 
-The other example though from an unknown source. It is a similar implementation of the Strategy pattern made in C\#.~\cite{bibitem:CSharp}
+Another example though from an unknown source, but. It is a similar implementation of the Strategy pattern made in C\#.~\cite{bibitem:CSharp}
+
+Lines of code had an increase which is to be expected. This can have a negative impact on maintainability, but since the increase of lines is in a new file this does in fact make the \texttt{MainUI.js} more maintainable and less coupled.
+
+When the metrics are combined some conclusions can be drawn:
+\begin{itemize}
+	\item No matter how big the switch case is \texttt{MainUI.js} will always have the same length with strategy and cyclomatic complexity will be reduced down to one.
+	\item The total amount of line of code will increase with two for each switch case that is removed.
+\end{itemize}
+
+\subsection{Method}
+The implementation of the pattern was not trivial to translate. Since JavaScript is untyped and does not have inheritance this implementation might seem a bit strange for some one not used to design patterns and object oriented languages. Though if the project is done in object oriented inspired design, this implementation is quite similar to the e.g. Java version, but then either some version of inheritance should be implemented or at least some check in \texttt{Messager.js} or in \texttt{showMessage()} to handle errors or a default behavior.
+
+The metrics used are the two of the components that Visual Studio by Microsoft uses~\cite{bibitem:MI}. The conclusions drawn from this report are that they seem to work equally well in JavaScript compared to object oriented languages.
 
 \section{Conclusion}
 The definition of the Strategy pattern from the GoF is in some ways lost when translated into JavaScript. Interfaces does not exist and since it is untyped there would be no purpose using inheritance for this pattern. Though if the strategy pattern would be used reoccurring in a project the Duck Typed interface implementation by Harmes et al. is recommended to gain robuster code.~\cite{bibitem:DiazHarmes}
@@ -287,6 +299,11 @@ Dustin Diaz and Ross Harmes, \emph{Pro JavaScript design patterns}, \hskip 1em p
 Gil Fink, \emph{Applying Strategy Pattern Instead of Using Switch Statements}, \url{http://blogs.microsoft.co.il/gilf/2009/11/22/applying-strategy-pattern-instead-of-using-switch-statements/}, Accessed: 2017-06-07
 \bibitem{bibitem:CSharp}
 \emph{How to use Strategy Pattern Instead of Switch-Case statements}, \url{https://vcpptips.wordpress.com/tag/cyclomatic-complexity/}, Accessed: 2017-06-07
+\bibitem{bibitem:CC}
+Thomas J. McCabe, \emph{A Complexity Measure}", \hskip 1em plus 0.5em minus 0.4em\relax in IEEE Transactions on Software Engineering, vol. SE-2, no. 4, pp. 308-320, Dec. 1976.
+\bibitem{bibitem:MI}
+Microsoft Developer Network, \emph{Code Metrics Values}, \url{https://msdn.microsoft.com/en-us/library/bb385914.aspx}, Accessed: 2017-06-08
+
 \end{thebibliography}
 
 \end{document}
