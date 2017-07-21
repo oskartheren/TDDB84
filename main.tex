@@ -84,7 +84,7 @@ Email: oskth878@student.liu.se}}
 \maketitle
 
 \begin{abstract}
-	 In this report an implementation of the Prototype design pattern, as described by the GoF, is presented in the high-level and untyped programming language JavaScript. It is implemented into the context of an existing game, where it replaces a switch case to remove cyclomatic complexity. The cyclomatic complexity difference is compared to the difference in lines of code to evaluate how maintainability is affected. The report is concluded with some discussion on the usefulness of implementing the pattern in a bigger project.  
+	 In this report an implementation of the Strategy design pattern, as described by the Gang of Four, is presented in the high-level and untyped programming language JavaScript. It is implemented in an existing game, where it replaces a switch statement to reduce cyclomatic complexity. The difference in cyclomatic complexity and lines of code before and after the implementation is evaluated in the aspect of how maintainability is affected. The report is concluded with some discussion on the usefulness of implementing the pattern in a bigger project.
 \end{abstract}
 
 \section{Introduction}
@@ -216,7 +216,7 @@ The SOLID principles can be beneficial to implement in JavaScript if the project
 Despite the benefits, this report shows that the implementation can increase total lines of code which may have a maintainability drawback. And in search for a in depth evaluation of the pattern in JavaScript the results where only examples of different implementations in JavaScript and explanations why the pattern is beneficial in general object oriented design.
 
 \clearpage
-\appendix
+\section*{Code}
 
 \begin{lstlisting}[language=JavaScript, label=lst:switch-case, caption=\texttt{MainUI.js} The original switch case.]
 // Creates and shows a message dependent on entity.messageType
@@ -305,5 +305,7 @@ Thomas J. McCabe, \emph{A Complexity Measure}", \hskip 1em plus 0.5em minus 0.4e
 Microsoft Developer Network, \emph{Code Metrics Values}, \url{https://msdn.microsoft.com/en-us/library/bb385914.aspx}, Accessed: 2017-06-08
 
 \end{thebibliography}
+
+\section*{Improvements after submission}
 
 \end{document}
