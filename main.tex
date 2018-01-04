@@ -89,8 +89,7 @@ Email: oskth878@student.liu.se}}
 
 \section{Introduction}
 \label{sec:Introduction}
-It is widely acknowledged in object-oriented programming that Design Patterns can be useful for solving commonly occurring problems within a given context  by creating reusable code. Design Patterns were mainly introduced to software developers through the GoF (Gang of Four) that wrote about the concept in their book, ``Design Patterns: Elements of Reusable Object-Oriented Software''~\cite{bibitem:GoF}, though the idea originally comes from an architectural concept. The patterns have since been widely discussed, customized and used.
-
+Design Patterns were mainly introduced to software developers through the GoF (Gang of Four) that wrote about the concept in their book, ``Design Patterns: Elements of Reusable Object-Oriented Software''~\cite{bibitem:GoF}, though the idea originally comes from an architectural concept. It is widely acknowledged in object-oriented programming that Design Patterns can be useful for solving commonly occurring problems within a given context  by creating reusable code. Today patterns are often discussed, customized and used in a big part of software development.
 The Design Patterns are created from an object oriented perspective, while on the other hand web development is most commonly conducted in the dynamic, untyped and interpreted language JavaScript. More and more businesses are moving their products over to the web and with that comes high expectations on code quality. Harmes et al.~\cite{bibitem:DiazHarmes} and Osmani~\cite{bibitem:Osmani} have proposed to adapt the GoF's Design Patterns to make them applicable to JavaScript, in an attempt to make the code safer, more reusable and easier to maintain.
 
 When using Design Patterns it might not always be good to follow them blindly. Zhang et al. argues in their article ``What Do We Know about the Effectiveness of Software Design Patterns?'' that even though Design Patterns are so popular, there are few empirically justified reasons to use them.~\cite{bibitem:Zhang}
@@ -169,38 +168,32 @@ Both books contains arguments on why Design Patterns can be useful in JavaScript
 
 Since the 1991 when the ISO standard for maintainability was introduced (ISO 9126) there have been several attempts to link maintainability with different metrics. Heitlager et al. argues that a problem with the standard is that the suggested maintainability metrics measure the wrong things. They focus on the technical staffs maintenance performance instead of measuring the systems source code.~\cite{bibitem:Maintainability}
 
-There are several metrics that try to measure the complexity of a function or a program. These metrics have different advancement levels, they range from easily measured metrics like Lines of Code or Cyclomatic Complexity to Robillards interconnectivity metric that ``integrates the structural as well as the textual aspects of a program in such a way that the organization of a program can be seen graphically. The measure of complexity depends on how a statement is related to the rest of the program.''~\cite{bibitem:Robillard}
+There are several metrics that try to measure the complexity of a function or a program. These metrics have different advancement levels, some are easily measured like Lines of Code. Another simple metric is Cyclomatic Complexity, which is the number of linearly independent paths through some code. The point of the metric is that many paths indicates that it might both be hard to maintain and test. The metric was first developed by Thomas J. McCabe in his ``A Complexity Measure''.~\cite{bibitem:CC}
 
-In the paper ``Using Metrics to Evaluate Software System Maintainability'', Coleman et al. found that when they conducted automated software maintainability analysis on 11 software systems, they all corresponded to the experts' intuition and also provided additional useful data. The metric they created is widely used by among others Visual Studio by Microsoft~\cite{bibitem:MI}. It is called MI (Maintainability Index) which is calculated as a factored formula consisting of Source Lines of Code, Cyclomatic Complexity, Halstead Volume and percent of Lines of Comments. Where Halstead Volume is calculated from the programs lenght, amount of operands and amount of operators.~\cite{bibitem:MetricsToEvaluate}
+On the other side there are metrics like Robillards interconnectivity metric that ``integrates the structural as well as the textual aspects of a program in such a way that the organization of a program can be seen graphically. The measure of complexity depends on how a statement is related to the rest of the program.''~\cite{bibitem:Robillard}
 
+In the paper ``Using Metrics to Evaluate Software System Maintainability'', Coleman et al. found that when they conducted automated software maintainability analysis on 11 software systems, they all corresponded to the experts' intuition and also provided additional useful data. The metric they created is widely used by among others Visual Studio by Microsoft~\cite{bibitem:MI}. It is called MI (Maintainability Index) which is calculated as a factored formula consisting of Source Lines of Code, Cyclomatic Complexity, Halstead Volume and percent of Lines of Comments. Where Halstead Volume is calculated from the programs length, amount of operands and amount of operators.~\cite{bibitem:MetricsToEvaluate}
 
-Heitlage et al. discusses several problems with MI, which are summarized below:
-\begin{itemize}
-    \item \emph{Root-cause analysis} \\
-    Since the formula just gives a number it can be hard to know what the cause of a bad value is.
-    \item \emph{Average complexity} \\
-    This value will be small even though some methods might have high complexity, since most methods will not. They argue that an average value in this case is misleading.
-    \item \emph{Computability} \\
-		The Halstead Volume is difficult to define and compute.
-    \item \emph{Comment} \\
-		Comments have no correlation with maintainability at all in general.
-    \item \emph{Understandability} \\
-		The formula is hard to understand since it for example contains several constants that are introduced without any logical arguments.
-		\item \emph{Control} \\
-		The developers and management can easily feel a lack of control over the MI value.
-\end{itemize}
-They move on to suggest a metric of their own that is also using Lines of Code and Cyclomatic Complexity. They argue that it is better to calculate Cyclomatic Complexity per unit, where a unit is the smallest piece of code that can be executed and tested individually, eg. a method in Java.~\cite{bibitem:Maintainability}
+According to Heitlage et al. there are several problems with MI:
+	\begin{itemize}
+		\item Since the formula just gives a number it can be hard to know what the cause of a bad value is.
+		\item Average complexity will be small even though some methods might have high complexity, since most methods will not. They argue that an average value in this case is misleading.
+		\item The Halstead Volume is difficult to define and compute.
+		\item Comments have no correlation with maintainability at all in general. The formula is hard to understand since it for example contains several constants that are introduced without any logical arguments.
+		\item The developers and management can easily feel a lack of control over the MI value.
+	\end{itemize}
+They move on to suggest a metric of their own which also takes Lines of Code and Cyclomatic Complexity into account. They argue that it is better to calculate Cyclomatic Complexity per unit, where a unit is the smallest piece of code that can be executed and tested individually, eg. a method in Java.~\cite{bibitem:Maintainability}
 
-Gill et al. used the name complexity density for the ratio between Lines of Code and Cyclomatic Complexity. The purpose of their repport was to evaluate how the complexity density affects productivity of maintenance and claims that the ratio can be used as a good predictor of maintenance costs.~\cite{bibitem:CCD}
+Gill et al. uses the name Complexity Density for the ratio between Lines of Code and Cyclomatic Complexity of each module. The goal of their report, ``Cyclomatic Complexity Density and Software Maintenance Productivity'', was to evaluate how their metric affects productivity of maintenance. The metric was tested on some projects and they claim that the ratio was a good predictor of maintenance costs of modules.~\cite{bibitem:CCD}
 
-This metric is directly affected by the Strategy Pattern since one of the purposes of the pattern is to reduce the amount of conditional statements. It is additionally easy to calculate on smaller examples and is easy to understand.
+The Strategy Pattern directly affect Complexity Density, since one of the purposes of the pattern is to reduce the amount of conditional statements. It is additionally easy to calculate on smaller examples and is easy to understand.
 
 \section{Method}
 This section presents the JavaScript implementation of the Strategy Pattern as well as how the chosen metrics are used to evaluate the solution.
 
 \subsection{Interpretation of the Strategy Pattern for JavaScript}
 \label{sec:JavaScript}
-Since JavaScript is not an object oriented language the concept of an interface does not exist. Harmes et al. recommend creating a Duck Typed interface emulation, which is to assume that an interface is implemented if a object contains all the methods the interface has. To ensure it is implemented they recommend to use a methods. This would be useful if the Strategy Pattern was used in a real life program. But since this paper's purpose is to evaluate Strategy Pattern, uses quite a small example and JavaScript is untyped, the implementation of an interface is skipped and type correctness is assumed. This choice is backed since Harmes et al. claims that the use of an interface becomes most beneficial when the system gets more complex.~\cite{bibitem:DiazHarmes}
+Since JavaScript is not an object oriented language the concept of an interface does not exist. Harmes et al. recommend creating a Duck Typed interface emulation, which is to assume that an interface is implemented if a object contains all the methods the interface has. They recommend the use of a method that ensures that the interface is implemented. This would be useful if the Strategy Pattern was used in a real life program. But since this paper's purpose is to evaluate Strategy Pattern, it uses quite a small example and JavaScript is untyped, the implementation of an interface is skipped and type correctness is assumed. This choice is backed since Harmes et al. claims that the use of an interface becomes most beneficial when the system gets more complex.~\cite{bibitem:DiazHarmes}
 
 The example used in this paper is taken from an existing game. The code that is supposed to be replaced with the Strategy Pattern is a switch statement that sets a \texttt{message} dependent on a string. It is part of a method that renders a message in the \texttt{MainUI} from the method parameter \texttt{entity}, see Listing~\ref{lst:switch-case}.
 
@@ -216,10 +209,10 @@ entity.messageType = "HumanMessage";
 The Strategy Pattern is implemented in a separate file called \texttt{Messager.js}. It contains a prototype \texttt{Messager(strategy)} that takes a strategy and saves it to its own context \texttt{this}. It also contains a method \texttt{getMessage(...)} that calls the method \texttt{getMessage(...)} on the strategy bound to the context of \texttt{Messager}. The different strategies are in this case also placed in the file \texttt{Messager.js}, so when a new one is needed it just needs to be added to this file. For the resulting file see Listing~\ref{lst:result}.
 
 \subsection{Metrics}
-The choice of metrics is not trivial, as discussed in section~\ref{sec:Maintainability}. The preferred metric for a bigger project would be either MI or something similar to what is suggested by Heitlage et al. Since MI is quite complex it will probably be hard to implement and understand in this example, as argued by Heitlage et al.~\cite{bibitem:Maintainability}. Implementing all the metrics suggested by Heitlage et al. would take quite long time, hence the chosen metrics for this paper being a subset from both Heitlage et al. and MI. Cyclomatic Complexity and Lines of Code are quite easy to measure and are applicable to many languages, they are explained bellow:
+The choice of metrics is not trivial, as discussed in section~\ref{sec:Maintainability}. The preferred metric for a bigger project would be either MI or something similar to what is suggested by Heitlage et al. Since MI is quite complex it will probably be hard to implement and understand in this example, as argued by Heitlage et al.~\cite{bibitem:Maintainability}. Implementing all the metrics suggested by Heitlage et al. would take quite long time, hence the chosen metrics for this paper being a subset from both Heitlage et al. and MI. The two components suggested by Gill et al.~\cite{bibitem:CCD}, Cyclomatic Complexity and Lines of Code since they are quite easy to measure and are applicable to many languages, they are explained bellow:
 
 \subsubsection{Cyclomatic Complexity}
-It was first developed by Thomas J. McCabe in his ``A Complexity Measure''~\cite{bibitem:CC}, its primary purpose is to identify modules that are hard to maintain and test. For this smaller example it can be summarized to how many paths a program has where each switch statement and if statement creates a new path.
+For this smaller example it can be summarized to how many paths a program has where each switch statement and if statement creates a new path.
 
 \subsubsection{Lines of Code}
 This metric can be used to predict maintainability of code. In general, the amount of Lines of Code correlate with how maintainable the source code is. In this paper, physical Lines of Code are used, a count of every line that is not whitespace or comment.
@@ -349,6 +342,8 @@ Khomh, Foutse, Yann-Gaël Guéhéneuc, and Ptidej Team, \emph{An empirical study
 Robert C.~Martin, \emph{Agile software development: principles, patterns, and practices} \hskip 1em plus 0.5em minus 0.4em\relax Agile software development: principles, patterns, and practices, 2002
 \bibitem{bibitem:Maintainability}
 Heitlager, Ilja, Tobias Kuipers, and Joost Visser. \emph{A practical model for measuring maintainability} \hskip 1em plus 0.5em minus 0.4em\relax In Quality of Information and Communications Technology, pages 30-39, 2007
+\bibitem{bibitem:CC}
+Thomas J. McCabe, \emph{A Complexity Measure} \hskip 1em plus 0.5em minus 0.4em\relax in IEEE Transactions on Software Engineering, vol. SE-2, no. 4, pp. 308-320, Dec. 1976
 \bibitem{bibitem:Robillard}
 Pierre N.~Robillard and Germinal Boloix, \emph{The Interconnectivity Metrics: A New Metric Showing How a Program Is Organized} \hskip 1em plus 0.5em minus 0.4em\relax Journal of Systems and Software, Volume 10, Issue 1, Pages 29-39, July 1989
 \bibitem{bibitem:MI}
@@ -357,8 +352,6 @@ Microsoft Developer Network, \emph{Code Metrics Values}, \url{https://msdn.micro
 Don Coleman, Dan Ash, Bruce Lowther and Paul Oman, \emph{Using Metrics to Evaluate Software System Maintainability} \hskip 1em plus 0.5em minus 0.4em\relax Computer, Volume:27,  Issue: 8, August 1994
 \bibitem{bibitem:CCD}
 Gill, Geoffrey K., and Chris F. Kemerer, \emph{Cyclomatic complexity density and software maintenance productivity} \hskip 1em plus 0.5em minus 0.4em\relax IEEE transactions on software engineering 17.12, pages 1284-1288, 1991
-\bibitem{bibitem:CC}
-Thomas J. McCabe, \emph{A Complexity Measure} \hskip 1em plus 0.5em minus 0.4em\relax in IEEE Transactions on Software Engineering, vol. SE-2, no. 4, pp. 308-320, Dec. 1976
 \bibitem{bibitem:GilFink}
 Gil Fink, \emph{Applying Strategy Pattern Instead of Using Switch Statements}, \url{http://blogs.microsoft.co.il/gilf/2009/11/22/applying-strategy-pattern-instead-of-using-switch-statements/}, Accessed: 2017-06-07
 \bibitem{bibitem:CSharp}
@@ -366,8 +359,10 @@ Gil Fink, \emph{Applying Strategy Pattern Instead of Using Switch Statements}, \
 \end{thebibliography}
 
 \section*{Improvements after submission}
+\subsection{Resubmission 1 (2017-09-09)}
 I have tried to rectify all the problems in your assessment. I have mainly done improvements to the first two sections of the paper, since most feedback was about sources and motivation and connection of the metric, JavaScript, maintainability.
 
 I have also added several new sources and removed some old. I have tried to improve the language quality of the entire paper. The total length of the paper have been increased by circa 1000 words despite the fact that some old material have been removed.
+\subsection{Resubmission 2 (2018-01-04)}
 
 \end{document}
