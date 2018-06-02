@@ -2,6 +2,11 @@
 \usepackage{blindtext, graphicx, url}
 \hyphenation{}
 
+\usepackage[font=footnotesize]{caption}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\renewcommand\thetable{\arabic{table}}
+
 
  %%% JS %%%
 %Define the listing package
@@ -71,11 +76,10 @@ captionpos=b
 
  %%% END JS %%%
 
-
 \begin{document}
 \title{How does the implementation of\\
 Strategy Design Pattern in JavaScript\\
-affect Maintainability as measured by Cyclomatic Complexity and Lines of Code}
+affect Maintainability as measured by Maintainability Index}
 \author{\IEEEauthorblockN{Oskar Ther\'{e}n}
 \IEEEauthorblockA{Computer Engineering\\
 The Institute of Technology at Link\"{o}ping University\\
@@ -84,7 +88,7 @@ Email: oskth878@student.liu.se}}
 \maketitle
 
 \begin{abstract}
-	 In this paper an implementation of the Strategy Design Pattern, as originally described in the book ``Design Patterns: Elements of Reusable Object-Oriented Software'', is presented in the high-level and untyped programming language JavaScript. It is implemented in an existing game, where it replaces a switch statement to reduce Cyclomatic Complexity. The difference in Cyclomatic Complexity and Lines of Code before and after the implementation is evaluated in the aspect of how it affects maintainability. This paper is concluded with some discussion about the usefulness of implementing the pattern in a bigger project.
+	 In this paper an implementation of the Strategy Design Pattern, as originally described in the book ``Design Patterns: Elements of Reusable Object-Oriented Software'', is presented in the high-level and untyped programming language JavaScript. It is implemented in an existing game, where it replaces a switch statement to reduce the codes Cyclomatic Complexity. The difference before and after the implementation is evaluated with the help of the metric Maintainability Index in the aspect of how it affects maintainability. This paper is concluded with some discussion about the usefulness of implementing the pattern in a bigger project.
 \end{abstract}
 
 \section{Introduction}
@@ -95,11 +99,11 @@ The Design Patterns are created from an object oriented perspective, while on th
 
 When using Design Patterns it might not always be good to follow them blindly. Zhang et al. argues in their article ``What Do We Know about the Effectiveness of Software Design Patterns?'' that even though Design Patterns are so popular, there are few empirically justified reasons to use them.~\cite{bibitem:Zhang}
 
-The purpose of this paper is to find out if the implementation of a specific Design Pattern, will affect maintainability in a positive way, measured by two metrics in the programming language JavaScript. All of these concepts are in depth explained in the Background of this paper section~\ref{sec:Background}.
+The purpose of this paper is to find out if the implementation of a specific Design Pattern, will affect maintainability in a positive way, measured by a metric in the programming language JavaScript. All of these concepts are in depth explained in the Background of this paper Section~\ref{sec:Background}.
 
 \subsection{Research Question}
 \begin{itemize}
-	\item How does the implementation of Strategy Design Pattern in JavaScript affect Maintainability as measured by Cyclomatic Complexity and Lines of Code?
+	\item How does the implementation of Strategy Design Pattern in JavaScript affect Maintainability as measured by Maintainability Index?
 \end{itemize}
 
 \section{Background}
@@ -108,7 +112,7 @@ The purpose of this paper is to find out if the implementation of a specific Des
 \subsection{Strategy Design Pattern}
 \label{sec:Strategy}
 
-Strategy is a behavioral pattern that is created to minimize coupling by encapsulating a family of algorithms and make them interchangeable by abstracting away the algorithms' different functionalities into separate classes that implements a common interface, which is called strategy. An UML diagram of the concept is shown in Figure \ref{fig:Strategy}. For a language to be able to implement strategy in the way it is explained by the GoF it needs something similar to a Java interface. JavaScript does not have the concept of interface, which is further discussed in section~\ref{sec:JavaScript}.~\cite{bibitem:GoF}
+Strategy is a behavioral pattern that is created to minimize coupling by encapsulating a family of algorithms and make them interchangeable by abstracting away the algorithms' different functionalities into separate classes that implements a common interface, which is called strategy. An UML diagram of the concept is shown in Figure \ref{fig:Strategy}. For a language to be able to implement strategy in the way it is explained by the GoF it needs something similar to a Java interface. JavaScript does not have the concept of interface, which is further discussed in Section~\ref{sec:JavaScript}.~\cite{bibitem:GoF}
 
 \begin{figure}[ht!]
 	\centering
@@ -117,7 +121,7 @@ Strategy is a behavioral pattern that is created to minimize coupling by encapsu
 	\label{fig:Strategy}
 \end{figure}
 
-The GoF claims that one of the main applications of the pattern is to put conditional branches into new classes they call strategy classes when there several conditionals with many behaviors~\cite{bibitem:GoF}. This is motivativation that the example used in this paper, Listing~\ref{lst:switch-case}, is a good starting point.
+The GoF claims that one of the main applications of the pattern is to put conditional branches into new classes they call strategy classes when there several conditionals with many behaviors~\cite{bibitem:GoF}. This motivates that the example used in this paper, Listing~\ref{lst:switch-case}, is a good starting point.
 
 When discussing Design Patterns it is important to note that they are not always the perfect solution and have received some criticism. Zhang et al. is critical to the fact that some Design Patterns benefits are supported by weak empirical evidence.~\cite{bibitem:Zhang}
 
@@ -162,7 +166,7 @@ They also mention some drawbacks with Design Patterns, some of them can have a n
 
 Another book on the subject is Osmanis ``Learning JavaScript Design Patterns: A JavaScript and jQuery Developer's Guide'' which provides his interpretation of some of the GoF's Design Patterns both for JavaScript and the library jQuery. He discusses the different patterns and their usefulness in JavaScript.~\cite{bibitem:Osmani}
 
-Both books contains arguments to why Design Patterns can be useful in JavaScript but neither implements the Strategy Pattern. There is no obvious reason for this since the Strategy Pattern can be applied to remove the use of multiple conditionals, as mentioned in section~\ref{sec:Strategy}, which is as relevant in JavaScript as in object oriented languages. That makes the pattern an interesting choice for this paper.
+Both books contains arguments to why Design Patterns can be useful in JavaScript but neither implements the Strategy Pattern. There is no obvious reason for this since the Strategy Pattern can be applied to remove the use of multiple conditionals, as mentioned in Section~\ref{sec:Strategy}, which is as relevant in JavaScript as in object oriented languages. That makes the pattern an interesting choice for this paper.
 
 \subsection{Maintainability and Metrics}
 \label{sec:Maintainability}
@@ -176,21 +180,19 @@ On the other side there are metrics like Robillards interconnectivity metric tha
 In the paper ``Using Metrics to Evaluate Software System Maintainability'', Coleman et al. found that when they conducted automated software maintainability analysis on 11 software systems, they all corresponded to the experts' intuition and also provided additional useful data. The metric they created is widely used by among others Visual Studio by Microsoft~\cite{bibitem:MI}. It is called MI (Maintainability Index) which is calculated as a factored formula consisting of Source Lines of Code, Cyclomatic Complexity, Halstead Volume and percent of Lines of Comments. Where Halstead Volume is calculated from the programs length, amount of operands and amount of operators.~\cite{bibitem:MetricsToEvaluate}
 
 According to Heitlage et al. there are several problems with MI:
-	\begin{itemize}
+	\begin{enumerate}
 		\item Since the formula just gives a number it can be hard to know what the cause of a bad value is.
 		\item Average complexity will be small even though some methods might have high complexity, since most methods will not. They argue that an average value in this case is misleading.
 		\item The Halstead Volume is difficult to define and compute.
 		\item Comments have no correlation with maintainability at all in general. The formula is hard to understand since it for example contains several constants that are introduced without any logical arguments.
 		\item The developers and management can easily feel a lack of control over the MI value.
-	\end{itemize}
+	\end{enumerate}
 They move on to suggest a metric of their own which also takes Lines of Code and Cyclomatic Complexity into account. They argue that it is better to calculate Cyclomatic Complexity per unit, where a unit is the smallest piece of code that can be executed and tested individually, eg. a method in Java.~\cite{bibitem:Maintainability}
 
 Gill et al. uses the name Complexity Density for the ratio between Lines of Code and Cyclomatic Complexity of each module. The goal of their report, ``Cyclomatic Complexity Density and Software Maintenance Productivity'', was to evaluate how their metric affects productivity of maintenance. The metric was tested on some projects and they claim that the ratio was a good predictor of maintenance costs of modules.~\cite{bibitem:CCD}
 
-The Strategy Pattern directly affect Complexity Density, since one of the purposes of the pattern is to reduce the amount of conditional statements. Another benefit is that it is easy to calculate on smaller examples and is easy to understand.
-
 \section{Method}
-This section presents the JavaScript implementation of the Strategy Pattern as well as how the chosen metrics are used to evaluate the solution.
+This section presents the JavaScript implementation of the Strategy Pattern as well as how the chosen metric is used to evaluate the solution.
 
 \subsection{Interpretation of the Strategy Pattern for JavaScript}
 \label{sec:JavaScript}
@@ -209,126 +211,108 @@ entity.messageType = "HumanMessage";
 
 The Strategy Pattern is implemented in a separate file called \texttt{Messager.js}. It contains a prototype \texttt{Messager(strategy)} that takes a strategy and saves it to its own context \texttt{this}. It also contains a method \texttt{getMessage(...)} that calls the method \texttt{getMessage(...)} on the strategy bound to the context of \texttt{Messager}. The different strategies are in this case also placed in the file \texttt{Messager.js}, so when a new one is needed it just needs to be added to this file. For the resulting file see Listing~\ref{lst:result}.
 
-\subsection{Metrics}
-The choice of metrics is not trivial, as discussed in section~\ref{sec:Maintainability}. The preferred metric for a bigger project would be either MI or something similar to what is suggested by Heitlage et al. Since MI is quite complex it will probably be hard to implement and understand in this example, as argued by Heitlage et al.~\cite{bibitem:Maintainability}. Implementing all the metrics suggested by Heitlage et al. would take quite long time, hence the chosen metrics for this paper being a subset from both Heitlage et al. and MI. The two components suggested by Gill et al.~\cite{bibitem:CCD}, Cyclomatic Complexity and Lines of Code since they are quite easy to measure and are applicable to many languages, they are explained bellow:
+\subsection{Metric}
+The choice of metric is not trivial, as discussed in Section~\ref{sec:Maintainability}. The choosen metric is MI since it is still broadly used by e.g. Microsoft, the comments by Heitlage et al. is discussed in Section~\ref{sec:discussion}.  Since MI is quite complex it will probably be hard to implement, as argued by Heitlage et al.~\cite{bibitem:Maintainability}. Therefore a program, complexity-report~\cite{bibitem:complexity-report}, is used that output information about JavaScript code.  Microsofts version of MI is used, where the only difference is that it does not take comments in account, as sugested by Heitlage et al., and gives a value between 0 and 100. It is calculated as follows:
 
+\begin{verbatim}
+	Maintainability Index =
+  MAX(0, (171-5.2 *ln(Halstead Volume)
+             -0.23*Cyclomatic Complexity
+             -16.2*ln(Lines of Code)
+         )*100/171)
+\end{verbatim}
+The different components are explained bellow.
+
+\subsubsection{Halstead Volume}
+Halstead Volume is calculated as follows
+\begin{verbatim}
+Halstead Volume =
+  (the total number of operators +
+   the total number of operands) *
+  log(the number of distinct operators +
+      the number of distinct operands)
+\end{verbatim}
 \subsubsection{Cyclomatic Complexity}
-For this smaller example it can be summarized to how many paths a program has where each switch statement and if statement creates a new path.
+It can be summarized to how many paths a program has where each switch statement and if statement creates a new path.
 
 \subsubsection{Lines of Code}
-This metric can be used to predict maintainability of code. In general, the amount of Lines of Code correlate with how maintainable the source code is. In this paper, physical Lines of Code are used, a count of every line that is not whitespace or comment.
+In MI, Logical Lines of Code are used, a count of every programming language statement.
 
 \section{Result}
-The result of the two metrics is presented in the subsections below.
+The result from complexity-report is presented in Table~\ref{fig:result}. Additionally to MI, Lines of Code and Cyclomatic Complexity is also presented.
 
-\subsection{Cyclomatic Complexity}
-The Cyclomatic Complexity of the original code is three, one for each case in the switch statement.
-
-After the implementation of the Strategy Pattern the complexity is reduced down to one.
-
-\subsection{Lines of Code}
-The number of Lines of Code in the original code is 18.
-
-After the implementation of the Strategy Pattern, the total number of Lines of Code is increased to 29, though \texttt{MainUI.js} is reduced down to 5 lines.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |l|c|c| }
+		\hline
+		                                        & Switch & Strategy \\\hline
+		Mean per-function logical LOC           & 44     & 2.5      \\\hline
+		Highest function Cyclomatic Complexity  & 14     & 3        \\\hline
+		Mean per-function Cyclomatic Complexity & 14     & 1.1      \\\hline
+		Mean per-module maintainability index   & 46     & 81       \\
+		\hline
+	\end{tabular}
+	\small
+	\caption{The result from complexity-report on the two different examples.}
+	\label{fig:result}
+\end{table}
 
 \section{Discussion}
+\label{sec:discussion}
 The result and method are discussed in the following subsections.
 
 \subsection{Result}
-The Cyclomatic Complexity was reduced down one (which is the lowest possible number) in the function \texttt{showMessage}, which was the expected result when comparing with code examples found at two websites, though they were in the object oriented languages.
+The Cyclomatic Complexity per function and the highest value was reduced drastically, which was the expected result when comparing with code examples found at two websites, though they were in the object oriented languages.
 
 One example is by Gil Fink, that has among other co-authored several Microsoft Official Courses. He writes in a blog post about ``Applying Strategy Pattern Instead of Using Switch Statements'' where he applies the Strategy Pattern to C++.~\cite{bibitem:GilFink}
 
 Another example, though from an unknown source, is a similar implementation of the Strategy Pattern made in C\#.~\cite{bibitem:CSharp}
 
-Lines of Code had an increase, which is to be expected. This can have a negative impact on maintainability, but since the increase of lines is in a new file this does in fact make the \texttt{MainUI.js} more maintainable and less coupled.
+Total Lines of Code had an increase but reduced per module, which is to be expected. This can have a negative impact on maintainability, but since the increase of lines is in a new file this does in fact make the \texttt{MainUI.js} more maintainable and less coupled.
 
-When the metrics are combined some conclusions can be drawn:
-\begin{itemize}
-	\item No matter how big the switch statement is, \texttt{MainUI.js} will always have the same length with strategy, and Cyclomatic Complexity will be reduced down to one.
-	\item The total amount of line of code will increase with two for each switch statement that is removed.
-\end{itemize}
+When looking at the Maintainability Index, there is an significant increase. If new cases needs to be added to the example the MI of the old code decreases faster than the Strategy example which is more stable. Worth noting is that according to Welker~\cite{bibitem:KDWelker} MI is an effective approach, but the result is something that should not be followed blindly and taken as truth it merely gives a little view into the complex issues of maintenance.
+
+Ampatzoglou et al. did an implementation of the strategy pattern among others in two games and they also concluded that it helps in reducing the complexity of the code.~\cite{bibitem:Game}
 
 \subsection{Method}
 The implementation of the pattern was not trivial to translate. Since JavaScript is untyped and does not have inheritance, this implementation might seem a bit strange for someone not used to Design Patterns and object oriented languages. Though if the project were to be done in object oriented inspired design, this implementation would be quite similar to e.g. the Java version, but then either some version of inheritance should be implemented or at least some check in \texttt{Messager.js} or in \texttt{showMessage()} for handling errors or defining a default behavior.
 
-The conclusions drawn from this paper on the metrics are that they seem to work equally well in JavaScript as they do in oriented languages.
+Addressing some of the issues mentioned in Section~\ref{sec:Maintainability}:
+\begin{enumerate}
+	\item When comparing two examples and the number is normalized between 0-100 the number still gives a relative difference which shows which solution is best.
+	\item Since I only calculated the MI of one the relevant portion of the source code this value should not be misleading.
+	\item The use of a tool like complexity-report is very helpful here.
+	\item In Microsofts version of MI comments are not used, and this example only had one comment.
+\end{enumerate}
+
+The conclusions drawn from this paper on the metric is that it seem to work well in JavaScript though further investigation would be interesting.
 
 \section{Conclusion}
 The definition of the Strategy Pattern from the GoF is in some ways lost when translated into JavaScript. Interfaces do not exist, and since JavaScript is untyped there would be no point in using inheritance for this pattern. Though if the Strategy Pattern would be used multiple times in a project, the Duck Typed interface implementation by Harmes et al. is recommended to more robust code.~\cite{bibitem:DiazHarmes}
 
 The SOLID principles can be beneficial to follow in JavaScript, especially if the developers tries to do an object oriented inspired design. Design Pattern such as Strategy Pattern can be implemented quite similarly as shown in this paper, and gain some of the benefits from Single responsibility and Open-closed principals.
 
-Despite the benefits, the result show that the implementation can increase total Lines of Code, which may have a maintainability drawback. When searching for an in depth evaluation of the pattern in JavaScript, the results consisted only of examples of different implementations in JavaScript and explanations of why the pattern is beneficial in general object oriented design.
+Strategy Pattern has other maintainability benefits shown by Balazinska1 et al. They used to reduce code cloning and at the same time reduce the coupling of the code base.~\cite{bibitem:Redesign}
+
+Despite the great increase in maintainability according to the Maintainability Index, the result show that the implementation can increase total Lines of Code, which may have a maintainability drawback. When searching for an in depth evaluation of the pattern in JavaScript, the results consisted only of examples of different implementations in JavaScript and explanations of why the pattern is beneficial in general object oriented design.
 
 \clearpage
 \section*{Code}
 
-\begin{lstlisting}[language=JavaScript, label=lst:switch-case, caption=\texttt{MainUI.js} The original switch statement.]
-// Creates and shows a message dependent on entity.messageType
-MainUI.prototype.showMessage = function(entity) {
-	var message;
-	switch(entity.messageType) {
-		case "HumanMessage":
-			...
-			message = ...
-			break;
-		case "ZombieMessage":
-			...
-			message = ...
-			break;
-		case "MonsterMessage":
-			...
-			message = ...
-			break;
-	}
-	...
-};
-\end{lstlisting}
+\lstinputlisting[language=JavaScript, label=lst:switch-case, caption=\texttt{MainUI.js} The original switch statement.]{./switch/MainUI.js}
 
-\begin{lstlisting}[language=JavaScript, label=lst:strategy, caption=\texttt{MainUI.js} Switch statement replaced trough the Strategy Pattern.]
-// Creates and shows a message dependent on entity.messageStategy
-MainUI.prototype.showMessage = function(entity) {
-	var messager = new Messager(entity.messageStrategy);
-	var message = messager.getMessage(...);
-	...
-};
-\end{lstlisting}
 \newpage
-\begin{lstlisting}[language=JavaScript, label=lst:result, caption=\texttt{Messenger.js} Resultant strategy code. The strategy function names are the values of \texttt{ObjectTypeEnum}.]
-Messager = function(strategy) {
-  this.strategy = strategy;
-};
 
-Messager.prototype.getMessage = function(...) {
-  return this.strategy.getMessage(...);
-};
+\lstinputlisting[language=JavaScript, label=lst:strategy, caption=\texttt{MainUI.js} Switch statement replaced trough the Strategy Pattern.]{./strategy/MainUI.js}
 
-var humanStrategy = function() {
-  this.getMessage = function(...) {
-    ...
-    return message;
-  };
-};
+\newpage
 
-var zombieStrategy = function() {
-	this.getMessage = function(...) {
-		...
-		return message;
-	};
-};
+\lstinputlisting[language=JavaScript, label=lst:result, caption=\texttt{Messenger.js} Resultant strategy code. The strategy function names are the values of \texttt{ObjectTypeEnum}.]{./strategy/Messager.js}
 
-var monsterStrategy = function() {
-	this.getMessage = function(...) {
-		...
-		return message;
-	};
-};
-\end{lstlisting}
 \newpage
 \begin{thebibliography}{1}
 \bibitem{bibitem:GoF}
-Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides, \emph{Design Patterns: Elements of Reusable Object-Oriented Software} \hskip 1em plus 0.5em minus 0.4em\relax Addison-Wesley Professional, 1st edition, January 15, 1995
+Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides, \emph{Design Patterns: Elements of Reusable Object-Oriented Software} \hskip 1em plus 0.5em minus 0.4em\relax Addison-Wesley Professional, 1st edition, January 1995
 \bibitem{bibitem:DiazHarmes}
 Dustin Diaz and Ross Harmes, \emph{Pro JavaScript design patterns} \hskip 1em plus 0.5em minus 0.4em\relax Apress, 2008
 \bibitem{bibitem:Osmani}
@@ -338,13 +322,13 @@ Cheng Zhang and David Budgen, \emph{What Do We Know about the Effectiveness of S
 \bibitem{bibitem:Jalil}
 Jalil, Masita Abdul, and Shahrul Azman Mohd Noah, \emph{The difficulties of using design patterns among novices: An exploratory study.} \hskip 1em plus 0.5em minus 0.4em\relax Computational Science and its Applications, International Conference on, pages 97-103, 2007
 \bibitem{bibitem:DPaSQ}
-Khomh, Foutse, Yann-Gaël Guéhéneuc, and Ptidej Team, \emph{An empirical study of design patterns and software quality} \hskip 1em plus 0.5em minus 0.4em\relax GEODES–Research Group on Open, Distributed Systems, Experimental Software Engineering, January 29, 2008
+Khomh, Foutse, Yann-Gaël Guéhéneuc, and Ptidej Team, \emph{An empirical study of design patterns and software quality} \hskip 1em plus 0.5em minus 0.4em\relax GEODES–Research Group on Open, Distributed Systems, Experimental Software Engineering, January 2008
 \bibitem{bibitem:Bob}
 Robert C.~Martin, \emph{Agile software development: principles, patterns, and practices} \hskip 1em plus 0.5em minus 0.4em\relax Agile software development: principles, patterns, and practices, 2002
 \bibitem{bibitem:Maintainability}
 Heitlager, Ilja, Tobias Kuipers, and Joost Visser. \emph{A practical model for measuring maintainability} \hskip 1em plus 0.5em minus 0.4em\relax In Quality of Information and Communications Technology, pages 30-39, 2007
 \bibitem{bibitem:CC}
-Thomas J. McCabe, \emph{A Complexity Measure} \hskip 1em plus 0.5em minus 0.4em\relax in IEEE Transactions on Software Engineering, vol. SE-2, no. 4, pp. 308-320, Dec. 1976
+Thomas J. McCabe, \emph{A Complexity Measure} \hskip 1em plus 0.5em minus 0.4em\relax in IEEE Transactions on Software Engineering, vol. SE-2, no. 4, pp. 308-320, December 1976
 \bibitem{bibitem:Robillard}
 Pierre N.~Robillard and Germinal Boloix, \emph{The Interconnectivity Metrics: A New Metric Showing How a Program Is Organized} \hskip 1em plus 0.5em minus 0.4em\relax Journal of Systems and Software, Volume 10, Issue 1, Pages 29-39, July 1989
 \bibitem{bibitem:MI}
@@ -352,12 +336,26 @@ Microsoft Developer Network, \emph{Code Metrics Values}, \url{https://msdn.micro
 \bibitem{bibitem:MetricsToEvaluate}
 Don Coleman, Dan Ash, Bruce Lowther and Paul Oman, \emph{Using Metrics to Evaluate Software System Maintainability} \hskip 1em plus 0.5em minus 0.4em\relax Computer, Volume:27,  Issue: 8, August 1994
 \bibitem{bibitem:CCD}
-Gill, Geoffrey K., and Chris F. Kemerer, \emph{Cyclomatic complexity density and software maintenance productivity} \hskip 1em plus 0.5em minus 0.4em\relax IEEE transactions on software engineering 17.12, pages 1284-1288, 1991
+Gill, Geoffrey K., and Chris F. Kemerer, \emph{Cyclomatic complexity density and software maintenance productivity} \hskip 1em plus 0.5em minus 0.4em\relax IEEE transactions on software engineering 17.12, Pages 1284-1288, 1991
+\bibitem{bibitem:complexity-report}
+Escomplex \emph{complexity-report} \hskip 1em plus 0.5em minus 0.4em\relax https://www.npmjs.com/package/complexity-report, Accessed: 2018-05-27
 \bibitem{bibitem:GilFink}
 Gil Fink, \emph{Applying Strategy Pattern Instead of Using Switch Statements}, \url{http://blogs.microsoft.co.il/gilf/2009/11/22/applying-strategy-pattern-instead-of-using-switch-statements/}, Accessed: 2017-06-07
 \bibitem{bibitem:CSharp}
 \emph{How to use Strategy Pattern Instead of Switch-Case statements}, \url{https://vcpptips.wordpress.com/tag/cyclomatic-complexity/}, Accessed: 2017-06-07
+\bibitem{bibitem:KDWelker}
+Welker KD., \emph{The software maintainability index revisited} \hskip 1em plus 0.5em minus 0.4em\relax CrossTalk 14, Pages 18-21, August 2001
+\bibitem{bibitem:Game}
+Ampatzoglou A, Chatzigeorgiou A., \emph{Evaluation of object-oriented design patterns in game development} \hskip 1em plus 0.5em minus 0.4em\relax Information and Software Technology, pages 445-454, May 2007
+\bibitem{bibitem:Redesign}
+Balazinska M, Merlo E, Dagenais M, Lague B, Kontogiannis K., \emph{Partial redesign of Java software systems based on clone analysis} \hskip 1em plus 0.5em minus 0.4em\relax In Reverse Engineering, 1999. Proceedings. Sixth Working Conference, Pages 326-336, October 1999
 \end{thebibliography}
+
+
+% http://delivery.acm.org/10.1145/1680000/1671283/05314233.pdf?ip=130.236.89.50&id=1671283&acc=ACTIVE%20SERVICE&key=74F7687761D7AE37%2EE60FE3557EC52CD4%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1527338224_1ed3f3083354d969dc4c58cd21a8729f
+
+
+
 
 \section*{Improvements after submission}
 \subsection{Resubmission 1 (2017-09-09)}
@@ -369,5 +367,11 @@ I have also added several new sources and removed some old. I have tried to impr
 A lot of changes to sections I \& II since most of the criticism was to those parts. I have tried to connect JS, the metrics and maintainability more. Removed some general parts about maintainability and added some more specific information, same with CC and LoC.
 
 Also some minor overall text quality changes and some explanations about different concepts.
+
+\subsection{Resubmission 3 (2018-06-02)}
+Switched metric to MI, and therefore had to change mainly III-B and the sections after that. Added one more source.
+
+\end{document}
+urce.
 
 \end{document}
